@@ -11,8 +11,12 @@ class Client(val hostName: String, val port: Int) {
         val out = PrintWriter(socket.getOutputStream(), true)
         val input = BufferedReader(InputStreamReader(socket.getInputStream()))
         val userInput = BufferedReader(InputStreamReader(System.`in`))
-
         var str: String?
+
+        print("What is your nametag?: ")
+        str = userInput.readLine()
+        val messageCreator = MessageCreator(str)
+
         do {
             // Read user input
             if (userInput.ready()) {
@@ -22,7 +26,7 @@ class Client(val hostName: String, val port: Int) {
                 if (str == "free at last")
                     break
                 // Send user input
-                out.println(str)
+                out.println(messageCreator.generateMessage(str))
             }
 
             // Read input from server
